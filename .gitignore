@@ -3,7 +3,7 @@
 .sass-cache/
 .bower-*/
 .idea/
-node_modules/
+#node_modules/
 public/system/lib
 mean.iml
 test/coverage/
