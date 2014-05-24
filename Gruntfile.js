@@ -4,7 +4,7 @@ var paths = {
     js: ['*.js', 'server/**/*.js', 'public/**/*.js', 'test/**/*.js', '!test/coverage/**', '!public/system/lib/**', 'packages/**/*.js', '!packages/**/node_modules/**'],
     html: ['public/**/views/**', 'server/views/**', 'packages/**/public/**/views/**', 'packages/**/server/views/**'],
     css: ['public/**/css/*.css', '!public/system/lib/**', 'packages/**/public/**/css/*.css',
-         'public/**/sass/*.css', 'packages/**/public/**/sass/*.css']
+    'public/**/sass/*.css', 'packages/**/public/**/sass/*.css']
 };
 
 module.exports = function(grunt) {
@@ -79,6 +79,21 @@ module.exports = function(grunt) {
                 }
             }
         },
+        copy: {
+            dist: {
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: './public/system/assets/img/',
+                        dest: './public/build/img',
+                        src: [
+                            './**',
+                        ]
+                    }
+                ]
+            }
+        },
         nodemon: {
             dev: {
                 script: 'server.js',
@@ -126,10 +141,12 @@ module.exports = function(grunt) {
 
     //Default task(s).
     if (process.env.NODE_ENV === 'production') {
-        grunt.registerTask('default', ['clean','cssmin', 'uglify', 'concurrent']);
+        grunt.registerTask('default', ['clean','cssmin', 'uglify', 'copy:dist', 'concurrent']);
     } else {
         grunt.registerTask('default', ['clean', 'csslint', 'concurrent']);
     }
+
+    grunt.registerTask('build', ['clean','cssmin', 'uglify', 'copy:dist']);
 
     //grunt.registerTask('watchcss', ['watch:css']);
 
