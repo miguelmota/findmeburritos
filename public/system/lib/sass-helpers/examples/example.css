@@ -1,0 +1,65 @@
+/* line 3, example.scss */
+section {
+  padding: 0 40px 40px 40px;
+}
+
+/* line 7, example.scss */
+code {
+  display: block;
+  margin-bottom: 40px;
+}
+
+/* line 19, ../sass/helpers.scss */
+.placeholder::-webkit-input-placeholder {
+  color: blue;
+}
+/* line 20, ../sass/helpers.scss */
+.placeholder:-moz-placeholder {
+  color: blue;
+}
+/* line 21, ../sass/helpers.scss */
+.placeholder::-moz-placeholder {
+  color: blue;
+}
+/* line 22, ../sass/helpers.scss */
+.placeholder:-ms-input-placeholder {
+  color: blue;
+}
+
+/* line 18, example.scss */
+.triangle {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border: solid 24px;
+  border-color: transparent transparent black transparent;
+}
+
+/* line 22, example.scss */
+.circle {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  background: #000;
+  -webkit-border-radius: 1000px;
+  -ms-border-radius: 1000px;
+  -moz-border-radius: 1000px;
+  -o-border-radius: 1000px;
+  border-radius: 1000px;
+}
+
+/* line 30, example.scss */
+.ellipsis {
+  display: block;
+  /* Fallback for non-webkit */
+  display: -webkit-box;
+  height: 64.8px;
+  /* Fallback for non-webkit */
+  font-size: 18px;
+  line-height: 1.2;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

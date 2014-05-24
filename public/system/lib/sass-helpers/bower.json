@@ -1,0 +1,28 @@
+{
+  "name": "sass-helpers",
+  "version": "0.0.3",
+  "authors": [
+    "Miguel Mota <miguelmota2@gmail.com>"
+  ],
+  "description": "Sass helper mixins",
+  "main": "sass/helpers.scss",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "sass",
+    "helpers",
+    "mixins",
+    "css",
+    "compass"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/miguelmota/sass-helpers",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

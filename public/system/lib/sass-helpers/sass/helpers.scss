@@ -1,0 +1,91 @@
+@import 'compass';
+
+$break-mobile: 640px;
+$break-desktop: 1024px;
+
+@mixin respond-to($media) {
+    @if $media == mobile {
+        @media only screen and (max-width: $break-mobile) { @content; }
+    }
+    @else if $media == tablet {
+        @media only screen and (min-width: $break-mobile + 1) and (max-width: $break-desktop - 1) { @content; }
+    }
+    @else if $media == desktop {
+        @media only screen and (min-width: $break-desktop) { @content; }
+    }
+}
+
+@mixin placeholder {
+    &::-webkit-input-placeholder {@content}
+    &:-moz-placeholder           {@content}
+    &::-moz-placeholder          {@content}
+    &:-ms-input-placeholder      {@content}
+}
+
+
+@mixin triangle($size:24px, $color:#000, $direction:up, $trim:false, $transparent:false) {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: solid $size;
+    @if $direction == up {
+        border-color: transparent transparent $color transparent;
+        @if $transparent {
+            border-color: $color $color transparent $color;
+        }
+        @if $trim {
+            border-top-width: 0;
+        }
+    }
+    @if $direction == right {
+        border-color: transparent transparent transparent $color;
+        @if $transparent {
+            border-color: $color $color $color transparent ;
+        }
+        @if $trim {
+            border-right-width: 0;
+        }
+    }
+    @if $direction == down {
+        border-color: $color transparent transparent transparent;
+        @if $transparent {
+            border-color: transparent $color $color $color;
+        }
+        @if $trim {
+            border-bottom-width: 0;
+        }
+    }
+    @if $direction == left {
+        border-color: transparent $color transparent transparent;
+        @if $transparent {
+            border-color: $color transparent $color $color;
+        }
+        @if $trim {
+            border-left-width: 0;
+        }
+    }
+}
+
+// @credit: http://codepen.io/martinwolf/pen/qlFdp
+
+@mixin ellipsis($font-size: 18px, $line-height: 1.2, $lines-to-show: 3) {
+    display: block; /* Fallback for non-webkit */
+    display: -webkit-box;
+    height: $font-size*$line-height*$lines-to-show; /* Fallback for non-webkit */
+    margin: 0 auto;
+    font-size: $font-size;
+    line-height: $line-height;
+    -webkit-line-clamp: $lines-to-show;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@mixin vendor-prefix($name, $argument) {
+    -webkit-#{$name}: #{$argument};
+    -ms-#{$name}: #{$argument};
+    -moz-#{$name}: #{$argument};
+    -o-#{$name}: #{$argument};
+    #{$name}: #{$argument};
+}

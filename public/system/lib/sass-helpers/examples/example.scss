@@ -1,0 +1,32 @@
+@import '../sass/helpers';
+
+section {
+    padding: 0 40px 40px 40px;
+}
+
+code {
+    display: block;
+    margin-bottom: 40px;
+}
+
+.placeholder {
+    @include placeholder {
+        color: blue;
+    }
+}
+
+.triangle {
+    @include triangle(24px, #000, up, false, false);
+}
+
+.circle {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    background: #000;
+    @include vendor-prefix(border-radius, 1000px);
+}
+
+.ellipsis {
+    @include ellipsis(18px, 1.2, 3);
+}
