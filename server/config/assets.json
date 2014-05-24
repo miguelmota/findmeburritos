@@ -6,7 +6,11 @@
     },
     "js": {
         "public/build/js/dist.min.js": [
+            "public/system/lib/lodash/dist/lodash.js",
             "public/system/lib/angular/angular.js",
+            "public/system/lib/ngAutocomplete/src/ngAutocomplete.js",
+            "public/system/lib/angular-animate/angular-animate.js",
+            "public/system/lib/angular-route/angular-route.js",
             "public/system/lib/angular-mocks/angular-mocks.js",
             "public/system/lib/angular-cookies/angular-cookies.js",
             "public/system/lib/angular-resource/angular-resource.js",
@@ -16,7 +20,8 @@
             "public/system/lib/angular-bootstrap/ui-bootstrap-tpls.js",
             "public/init.js",
             "public/*/*.js",
-            "public/*/{controllers,routes,services}/*.js"
+            "public/*/{controllers,routes,services,directives}/*.js",
+            "public/*/{controllers,routes,services,directives}/*/*.js"
         ]
     }
 }

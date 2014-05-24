@@ -3,7 +3,8 @@
 var paths = {
     js: ['*.js', 'server/**/*.js', 'public/**/*.js', 'test/**/*.js', '!test/coverage/**', '!public/system/lib/**', 'packages/**/*.js', '!packages/**/node_modules/**'],
     html: ['public/**/views/**', 'server/views/**', 'packages/**/public/**/views/**', 'packages/**/server/views/**'],
-    css: ['public/**/css/*.css', '!public/system/lib/**', 'packages/**/public/**/css/*.css']
+    css: ['public/**/css/*.css', '!public/system/lib/**', 'packages/**/public/**/css/*.css',
+         'public/**/sass/*.css', 'packages/**/public/**/sass/*.css']
 };
 
 module.exports = function(grunt) {
@@ -20,22 +21,23 @@ module.exports = function(grunt) {
         watch: {
             js: {
                 files: paths.js,
-                tasks: ['jshint'],
+                tasks: [],
                 options: {
-                    livereload: true
+                    livereload: 4503
                 }
             },
             html: {
                 files: paths.html,
                 options: {
-                    livereload: true
+                    livereload: 4503
                 }
             },
             css: {
-                files: paths.css,
-                tasks: ['csslint'],
+                //files: paths.css,
+                files: './public/system/assets/sass/*',
+                tasks: ['csslint', 'compass'],
                 options: {
-                    livereload: true
+                    livereload: 4503
                 }
             }
         },
@@ -66,6 +68,17 @@ module.exports = function(grunt) {
                 files: '<%= assets.css %>'
             }
         },
+        compass: {
+            dist: {
+                options: {
+                    httpPath: '/',
+                    sassDir: './public/system/assets/sass',
+                    cssDir: './public/system/assets/css',
+                    relativeAssets: true,
+                    outputStyle: 'compressed'
+                }
+            }
+        },
         nodemon: {
             dev: {
                 script: 'server.js',
@@ -77,6 +90,7 @@ module.exports = function(grunt) {
                     delayTime: 1,
                     env: {
                         PORT: require('./server/config/config').port
+                        //PORT: 3000
                     },
                     cwd: __dirname
                 }
@@ -114,8 +128,10 @@ module.exports = function(grunt) {
     if (process.env.NODE_ENV === 'production') {
         grunt.registerTask('default', ['clean','cssmin', 'uglify', 'concurrent']);
     } else {
-        grunt.registerTask('default', ['clean','jshint', 'csslint', 'concurrent']);
+        grunt.registerTask('default', ['clean', 'csslint', 'concurrent']);
     }
+
+    //grunt.registerTask('watchcss', ['watch:css']);
 
     //Test task.
     grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);

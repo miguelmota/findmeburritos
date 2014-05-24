@@ -1,0 +1,383 @@
+@import 'compass';
+@import '../../lib/bootstrap/dist/css/bootstrap.css';
+@import '../../lib/animate.css/animate.css';
+@import '../../lib/sass-helpers/sass/helpers';
+
+$container-max-width: 1200px;
+
+@mixin animate($name) {
+    @if $name == fadeInDown {
+        @include vendor-prefix(animation, fadeInDown 1s)
+    }
+    @if $name == lightSpeedIn {
+        @include vendor-prefix(animation, lightSpeedIn 1s)
+    }
+}
+
+html, body {
+    height: 100%;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
+.ng-scope,
+.ng-isolate-scope {
+    height: auto;
+}
+
+.hidden {
+    @include hide-text();
+}
+
+body {
+    background: #eee url(../img/backgrounds/10385186_10201777959753362_542493936_n.jpg) no-repeat fixed center center;
+    background-size: cover;
+}
+
+a {
+    @include transition(color linear .25s);
+}
+
+address {
+    margin: 0;
+}
+
+.content {
+    height: 100%;
+}
+
+$footer-height: 70px;
+
+.container {
+    padding: 0;
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    position: relative;
+    margin-bottom: -($footer-height);
+    max-width: $container-max-width;
+}
+
+.container:after {
+    content: "";
+    display: block;
+    height: $footer-height;
+}
+
+.search-region {
+    width: 100%;
+    padding: 20px;
+    width: 100%;
+    background: #fff;
+    background: rgba(255,255,255,.5);
+
+    @include animate(fadeInDown);
+
+    @include respond-to(mobile) {
+        padding: 20px 10px;
+    }
+}
+
+$search-region-height: 240px;
+$search-region-height-mobile: 165px;
+
+.search-region-centered {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin: -($search-region-height / 2) 0 0 0;
+    height: $search-region-height;
+
+    @include animate(lightSpeedIn);
+
+    @include respond-to(mobile) {
+        margin: -($search-region-height-mobile / 2) 0 0 0;
+        height: $search-region-height-mobile;
+    }
+}
+
+.search-region .form-control {
+    padding: 30px;
+    font-size: 46px;
+
+    @include respond-to(mobile) {
+        padding: 30px 15px;
+        font-size: 26px;
+    }
+}
+
+.search-region .btn {
+    font-size: 32px;
+    width: 100%;
+    display: block;
+
+    @include respond-to(mobile) {
+        font-size: 26px;
+    }
+}
+
+.list-group {
+    padding: 20px;
+
+    @include respond-to(mobile) {
+        padding: 10px;
+    }
+}
+
+$list-group-item-height: 200px;
+
+.list-group-item {
+    -webkit-transition: color 0.6s, background-color 0.3s;
+    -moz-transition: color 0.6s, background-color 0.3s;
+    -ms-transition: color 0.6s, background-color 0.3s;
+    transition: color 0.6s, background-color 0.3s;
+    background: #fff;
+    background: rgba(255,255,255,.9);
+    @include clearfix();
+    height: $list-group-item-height;
+    margin: 0 0 10px 0;
+    @include box-shadow(0 1px 2px 2px rgba(0,0,0,.2));
+    @include transition(background linear .25s);
+
+
+    @include respond-to(mobile) {
+        height: auto;
+    }
+}
+
+
+.list-group-item,
+.list-group-item:first-child,
+.list-group-item:last-child {
+    @include border-radius(0px);
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.list-group-item:hover {
+    background: rgba(255,255,255,1);
+}
+
+.list-group-item.ng-enter {
+    -webkit-animation: fadeInLeft 1s;
+    -moz-animation: fadeInLeft 1s;
+    -ms-animation: fadeInLeft 1s;
+    animation: fadeInLeft 1s;
+}
+
+.list-group-item.ng-leave {
+    -webkit-animation: fadeInLeft 1s;
+    -moz-animation: fadeInLeft 1s;
+    -ms-animation: fadeInLeft 1s;
+    animation: fadeInLeft 1s;
+}
+
+$list-group-item-name-color: #587183;
+
+.list-group-item-name {
+    font-size: 46px;
+    font-weight: bold;
+    line-height: 1;
+    color: $list-group-item-name-color;
+
+    @include respond-to(mobile) {
+        font-size: 24px;
+    }
+}
+
+.list-group-item-name:hover {
+    text-decoration: none;
+    color: darken($list-group-item-name-color, 30%);
+}
+
+.list-group-item-name:visited {
+    color: lighten($list-group-item-name-color, 30%);
+}
+
+.list-group-item-url {
+    font-size: 20px;
+}
+
+.list-group-item-address {
+    font-size: 20px;
+    color: #4D4D4D;
+
+    @include respond-to(mobile) {
+        font-size: 16px;
+    }
+}
+
+.list-group-item-phone {
+    font-size: 16px;
+    color: #999;
+
+    @include respond-to(mobile) {
+        font-size: 14px;
+    }
+}
+
+.list-group-item-rating-container {
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    @include clearfix();
+
+    @include respond-to(mobile) {
+        position: static;
+    }
+}
+
+.list-group-item-rating {
+    position: relative;
+}
+
+.list-group-item-rating-image {
+    width: 80px;
+    float: left;
+}
+
+.list-group-item-provider-logo {
+    display: inline-block;
+    height: 20px;
+    position: relative;
+    width: 80px;
+    float: left;
+}
+
+.list-group-item-provider-logo-image {
+    height: 100%;
+    margin: -10px 0 0 5px;
+}
+
+.list-group-item-image-container {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.list-group-item-image {
+    width: 100%;
+    background: #eee url(../img/loaders/image-loader.gif) no-repeat center center;
+    border: 1px solid #eee;
+}
+
+.column {
+    position: relative;
+    height: 100%;
+}
+
+.column-left {
+    display: inline-block;
+    float: left;
+    width: 20%;
+}
+
+.column-right {
+    display: inline-block;
+    float: left;
+    padding: 0 0 0 20px;
+    width: 80%;
+
+    @include respond-to(mobile) {
+        padding: 0 0 0 10px;
+    }
+}
+
+.pagination-region {
+    width: 100%;
+    padding: 0 20px 20px 20px;
+    @include clearfix();
+}
+
+.pagination {
+    display: inline-block;
+    width: 50%;
+    margin: 0;
+    border: none;
+}
+
+.pagination-previous {
+    float: left;
+    padding: 0 10px 0 0;
+}
+
+.pagination-next {
+    float: right;
+    padding: 0 0 0 10px;
+}
+
+.pagination a {
+    display: block;
+    font-size: 32px;
+    width: 100%;
+
+    @include respond-to(mobile) {
+        font-size: 26px;
+    }
+}
+
+.no-results-region {
+    padding: 20px;
+    width: 100%;
+}
+
+.no-results {
+    background: #fff;
+    background: rgba(255,255,255,.9);
+    font-size: 32px;
+    padding: 20px;
+
+    @include respond-to(mobile) {
+        font-size: 20px;
+    }
+}
+
+.footer-region {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    @include clearfix();
+    background: #000;
+    background: rgba(0,0,0,.2);
+}
+
+.footer {
+    width: 100%;
+    @include clearfix();
+    padding: 10px 20px;
+    line-height: 3.6;
+    color: #222;
+    height: $footer-height;
+    max-width: $container-max-width;
+    margin: 0 auto;
+}
+
+.footer a,
+.footer a:hover {
+    color: #222;
+}
+
+.footer-moogs-logo-container {
+    display: inline-block;
+    width: 42px;
+    height: 42px;
+    float: right;
+}
+
+.footer-moogs-logo {
+    width: 100%;
+}
+
+.pac-item {
+    padding: 10px;
+    font-size: 18px;
+}
+
+.pac-item-query {
+    font-size: 18px;
+}

@@ -1,0 +1,23 @@
+{% extends '../../../../server/views/layouts/default.html' %}
+{% block content %}
+
+    {% if places %}
+        {% for place in places %}
+            {% if place.first %}<ul class="list-group">{% endif %}
+                <li class="list-group-item">
+                    <div>{{ place.name }}</div>
+                    <div><a href="{{ place.url }}" target="_blank">{{ place.url }}</a></div>
+                    <div><a href="tel:{{ place.phone }}">{{ place.displayPhone }}</a></div>
+                    <div>{{ place.location.displayAddress }}</div>
+                    <div>{{ place.rating }} stars</div>
+                    {% if place.distance %}
+                        <div>{{ place.distance }} mi</div>
+                    {% endif %}
+                    <div>{{ place.id }}</div>
+                    <div><img src="{{ place.imageUrl }}" alt=""></div>
+                </li>
+            {% if place.last %}</ul>{% endif %}
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

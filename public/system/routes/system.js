@@ -7,13 +7,19 @@ angular.module('mean.system').config(['$stateProvider', '$urlRouterProvider',
             $urlRouterProvider.otherwise('/');
 
             // states for my app
-            $stateProvider              
+            $stateProvider
                 .state('home', {
                     url: '/',
                     templateUrl: 'public/system/views/index.html'
                 })
                 .state('auth', {
                     templateUrl: 'public/auth/views/index.html'
+                })
+                .state('places', {
+                    url: '/places',
+                    templateUrl: 'public/system/views/places.html',
+                    reloadOnSearch: true,
+                    controller: 'PlacesController'
                 });
         }
     ])

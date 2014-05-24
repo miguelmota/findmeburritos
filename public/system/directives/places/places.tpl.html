@@ -1,0 +1,43 @@
+<section class="places-region">
+    <ul class="list-group" ng-show="places.places">
+        <li class="list-group-item" ng-repeat="place in places.places">
+            <div class="column column-left">
+                <div class="list-group-item-image-container">
+                    <a href="{{ place.url }}" target="_blank">
+                        <img class="list-group-item-image" ng-src="{{ place.imageUrl }}" alt="" ng-show="place.imageUrl"></div>
+                </a>
+            </div>
+            <div class="column column-right">
+                <div><a class="list-group-item-name" href="{{ place.url }}" target="_blank" ng-show="place.name">{{ place.name }}</a></div>
+                <div ng-hide="true"><a class="list-group-item-url" href="{{ place.url }}" target="_blank" ng-show="place.url">{{ place.url }}</a></div>
+                <address ng-show="place.location.displayAddress"><a class="list-group-item-address" href="https://www.google.com/maps?q={{ place.location.displayAddress }}" target="_blank">{{ place.location.displayAddress }}</a></address>
+                <div><a class="list-group-item-phone" href="tel:{{ place.phone }}" ng-show="place.phone">{{ place.displayPhone }}</a></div>
+                <div class="list-group-item-rating-container">
+                    <div class="list-group-item-rating" ng-show="place.rating">
+
+                        <a href="{{ place.url }}" target="_blank">
+                            <img class="list-group-item-rating-image" ng-src="{{ place.ratingImageUrl }}">
+                            <div class="list-group-item-provider-logo">
+                                <img class="list-group-item-provider-logo-image" src="/public/system/assets/img/logos/yelp-logo.png">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="list-group-item-distance" ng-show="place.distance">{{ place.distance }} mi</div>
+            </div>
+        </li>
+    </ul>
+    <div class="no-results-region" ng-hide="places.places">
+        <div class="no-results">
+            Oh no, nothing found :( try a different location
+        </div>
+    </div>
+</section>
+<section class="pagination-region" ng-show="showPagination">
+    <div class="pagination pagination-previous">
+        <a  class="btn btn-primary" ng-click="prev()" ng-show="showPrev">Prev</a>
+    </div>
+    <div class="pagination pagination-next">
+        <a class="btn btn-primary" ng-click="next()" ng-show="showNext">More</a>
+    </div>
+</section>

@@ -1,14 +1,20 @@
 {
-    "name": "mean",
-    "version": "0.3.3",
-    "dependencies": {
-        "angular": "latest",
-        "angular-resource": "latest",
-        "angular-cookies": "latest",
-        "angular-mocks": "latest",
-        "angular-route": "latest",
-        "bootstrap": "3.1.1",
-        "angular-bootstrap": "0.11.0",
-        "angular-ui-router": "#master"
-    }
+  "name": "mean",
+  "version": "0.3.3",
+  "dependencies": {
+    "angular": "latest",
+    "angular-resource": "latest",
+    "angular-cookies": "latest",
+    "angular-mocks": "latest",
+    "angular-route": "~1.2.16",
+    "bootstrap": "3.1.1",
+    "angular-bootstrap": "0.11.0",
+    "angular-ui-router": "#master",
+    "lodash": "~2.4.1",
+    "angular-animate": "~1.2.16",
+    "animate.css": "~3.1.1",
+    "sass-helpers": "*",
+    "font-awesome": "~4.1.0",
+    "ngAutocomplete": "~1.0.0"
+  }
 }
