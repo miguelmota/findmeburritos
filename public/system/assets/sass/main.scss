@@ -32,8 +32,13 @@ html, body {
 }
 
 body {
-    background: #eee url(../img/backgrounds/10385186_10201777959753362_542493936_n.jpg) no-repeat fixed center center;
+    background: #92cca2 url(../img/backgrounds/10385186_10201777959753362_542493936_n.jpg) no-repeat fixed center center;
     background-size: cover;
+
+    @include respond-to(mobile) {
+        background: #92cca2 url(../img/backgrounds/10385186_10201777959753362_542493936_n.jpg) no-repeat center 0;
+        background-size: contain;
+    }
 }
 
 a {
