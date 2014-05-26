@@ -69,8 +69,7 @@ body {
     background-size: cover;
 
     @include respond-to(mobile) {
-        background-repeat: no-repeat;
-        background-position: center -60px;
+        background: #4d7d48 url(../img/backgrounds/10377921_10201802397324286_380475326_o.jpg) no-repeat fixed center -60px;
         background-size: contain;
     }
 }
