@@ -65,11 +65,12 @@ html, body {
 }
 
 body {
-    background: #92cca2 url(../img/backgrounds/10385186_10201777959753362_542493936_n.jpg) no-repeat fixed center center;
+    background: #4d7d48 url(../img/backgrounds/10377921_10201802397324286_380475326_o.jpg) no-repeat fixed center center;
     background-size: cover;
 
     @include respond-to(mobile) {
-        background: #92cca2 url(../img/backgrounds/10385186_10201777959753362_542493936_n.jpg) no-repeat center 0;
+        background-repeat: no-repeat;
+        background-position: center 0;
         background-size: contain;
     }
 }
@@ -135,7 +136,7 @@ address {
 }
 
 $search-region-height: 240px;
-$search-region-height-mobile: 165px;
+$search-region-height-mobile: 200px;
 $search-region-offset: 40px;
 
 .search-region-centered {
