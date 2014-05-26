@@ -42,6 +42,7 @@ module.exports.search = function(opts) {
     var deferred = Q.defer();
 
     opts.offset = (((opts.page || 1) - 1) * 10);
+    opts.ll = opts.latlng;
 
     opts = compactObject(_.omit(_.defaults(opts, {
         term: 'burritos',
@@ -54,7 +55,7 @@ module.exports.search = function(opts) {
         lang: 'en',
         cc: 'US',
         ll: null, // lat,lng
-    }), ['page']));
+    }), ['page', 'latlng']));
 
     yelp.search(opts, function(error, data) {
         if (error) return deferred.reject(error);

@@ -13,10 +13,17 @@ angular.module('mean.system').directive('btSearchForm', ['$log', '$rootScope', '
 
             },
             link: function($scope, element, attrs) {
-                $scope.options = {
+                var options = {
                     country: 'us',
-                    types: '(regions)'
+                    types: ['(regions)']
                 };
+
+                var input = document.getElementById('autocomplete');
+                var autocomplete = new google.maps.places.Autocomplete(input, options);
+                google.maps.event.addListener(autocomplete, 'place_changed', function() {
+                    $log.debug(autocomplete.getPlace());
+                    $scope.location = input.value;
+                });
 
                 $scope.centered = attrs.centered;
 
@@ -25,10 +32,10 @@ angular.module('mean.system').directive('btSearchForm', ['$log', '$rootScope', '
 
                     $scope.page = 1;
                     var query = {location: $scope.location, page: $scope.page};
-                    Places.get(query).success(function(data) {
+                    Places.get(query).then(function(data) {
                         $log.info(data);
                         $location.path('/places');
-                    }).error(function(err) {
+                    }, function(err) {
                         $log.error(err);
                     });
 

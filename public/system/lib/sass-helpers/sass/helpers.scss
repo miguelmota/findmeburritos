@@ -89,3 +89,18 @@ $break-desktop: 1024px;
     -o-#{$name}: #{$argument};
     #{$name}: #{$argument};
 }
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}

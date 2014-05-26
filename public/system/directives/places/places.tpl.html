@@ -1,5 +1,5 @@
 <section class="places-region">
-    <ul class="list-group" ng-show="places.places">
+    <ul class="list-group" ng-show="places.places && places.places.length > 0">
         <li class="list-group-item" ng-repeat="place in places.places">
             <div class="column column-left">
                 <div class="list-group-item-image-container">
@@ -27,17 +27,21 @@
             </div>
         </li>
     </ul>
-    <div class="no-results-region" ng-hide="places.places">
+    <div class="loader-region" ng-show="fetching">
+        <div class="loader"></div>
+    </div>
+    <div class="no-results-region" ng-show="!fetching && (!places.places || places.places.length == 0)">
         <div class="no-results">
-            Oh no, nothing found :( try a different location
+            <div ng-show="!page || page == 1">Oh no, nothing found :( try a different location</div>
+            <div ng-show="page > 1">Oh no, no more results. <a href ng-click="prev()">Go back</a></div>
         </div>
     </div>
 </section>
-<section class="pagination-region" ng-show="showPagination">
+<section class="pagination-region" ng-show="hasPagination">
     <div class="pagination pagination-previous">
-        <a  class="btn btn-primary" ng-click="prev()" ng-show="showPrev">Prev</a>
+        <a  class="btn btn-primary" href ng-click="prev()" ng-show="hasPrev">Prev</a>
     </div>
     <div class="pagination pagination-next">
-        <a class="btn btn-primary" ng-click="next()" ng-show="showNext">More</a>
+        <a class="btn btn-primary" href ng-click="next()" ng-show="hasNext">More</a>
     </div>
 </section>

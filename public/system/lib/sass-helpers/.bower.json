@@ -24,11 +24,11 @@
     "test",
     "tests"
   ],
-  "_release": "68c919cc88",
+  "_release": "51ae5cc6e8",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "68c919cc880563434396264ff8f38ff5657d65ff"
+    "commit": "51ae5cc6e89c576331b2b39b68b3d8b402a895a9"
   },
   "_source": "git://github.com/miguelmota/sass-helpers.git",
   "_target": "*",

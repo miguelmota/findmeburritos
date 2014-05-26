@@ -4,6 +4,9 @@
 @import '../../lib/sass-helpers/sass/helpers';
 
 $container-max-width: 1200px;
+$input-clear-button-width: 55px;
+$footer-height: 80px;
+$footer-height-mobile: 95px;
 
 @mixin animate($name) {
     @if $name == fadeInDown {
@@ -11,6 +14,36 @@ $container-max-width: 1200px;
     }
     @if $name == lightSpeedIn {
         @include vendor-prefix(animation, lightSpeedIn 1s)
+    }
+}
+
+%loader {
+    margin: 6em auto;
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+    border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+    border-left: 1.1em solid #ffffff;
+    -webkit-animation: load8 1.1s infinite linear;
+    -moz-animation: load8 1.1s infinite linear;
+    -ms-animation: load8 1.1s infinite linear;
+    -webkit-animation: load8 1.1s infinite linear;
+    animation: load8 1.1s infinite linear;
+}
+%loader,
+%loader:after {
+    border-radius: 50%;
+    width: 10em;
+    height: 10em;
+}
+@include keyframes(load8) {
+    0% {
+        @include transform(rotate(0deg));
+    }
+    100% {
+        @include transform(rotate(360deg));
     }
 }
 
@@ -49,11 +82,18 @@ address {
     margin: 0;
 }
 
+.loader-region {
+    text-align: center;
+    padding: 20px;
+}
+
+.loader {
+    @extend %loader;
+}
+
 .content {
     height: 100%;
 }
-
-$footer-height: 70px;
 
 .container {
     padding: 0;
@@ -64,12 +104,20 @@ $footer-height: 70px;
     position: relative;
     margin-bottom: -($footer-height);
     max-width: $container-max-width;
+
+    @include respond-to(mobile) {
+        margin-bottom: -($footer-height-mobile);
+    }
 }
 
 .container:after {
     content: "";
     display: block;
     height: $footer-height;
+
+    @include respond-to(mobile) {
+        height: $footer-height-mobile;
+    }
 }
 
 .search-region {
@@ -88,28 +136,33 @@ $footer-height: 70px;
 
 $search-region-height: 240px;
 $search-region-height-mobile: 165px;
+$search-region-offset: 40px;
 
 .search-region-centered {
     position: absolute;
     top: 50%;
     left: 0;
-    margin: -($search-region-height / 2) 0 0 0;
+    margin: (-($search-region-height / 2) - $search-region-offset) 0 0 0;
     height: $search-region-height;
 
     @include animate(lightSpeedIn);
 
     @include respond-to(mobile) {
-        margin: -($search-region-height-mobile / 2) 0 0 0;
+        margin: (-($search-region-height-mobile / 2) - $search-region-offset) 0 0 0;
         height: $search-region-height-mobile;
     }
 }
 
 .search-region .form-control {
-    padding: 30px;
+    padding: 30px (30px + $input-clear-button-width) 30px 30px;
     font-size: 46px;
+    height: 100%;
+    @include placeholder {
+        color: #ccc;
+    }
 
     @include respond-to(mobile) {
-        padding: 30px 15px;
+        padding: 30px (15px + $input-clear-button-width) 30px 15px;
         font-size: 26px;
     }
 }
@@ -354,12 +407,17 @@ $list-group-item-name-color: #587183;
 .footer {
     width: 100%;
     @include clearfix();
-    padding: 10px 20px;
-    line-height: 3.6;
-    color: #222;
+    padding: 10px 60px 10px 20px;
+    line-height: 1.4;
+    color: #333;
     height: $footer-height;
     max-width: $container-max-width;
     margin: 0 auto;
+
+    @include respond-to(mobile) {
+        height: $footer-height-mobile;
+        line-height: 1.4;
+    }
 }
 
 .footer a,
@@ -372,10 +430,24 @@ $list-group-item-name-color: #587183;
     width: 42px;
     height: 42px;
     float: right;
+    position: absolute;
+    right: 20px;
+    top: 10px;
 }
 
 .footer-moogs-logo {
     width: 100%;
+}
+
+.twitter-follow-region {
+    display: block;
+    width: 100%;
+    padding: 5px 0 0 0;
+    @include clearfix();
+}
+
+.twitter-follow-button {
+
 }
 
 .pac-item {
@@ -385,4 +457,22 @@ $list-group-item-name-color: #587183;
 
 .pac-item-query {
     font-size: 18px;
+}
+
+.input-clear-button {
+    @include border-radius(1000px);
+    width: $input-clear-button-width;
+    height: $input-clear-button-width;
+    line-height: .8;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background: rgba(0,0,0,.4);
+    color: #fff;
+    font-size: 55px !important;
+}
+
+.input-clear-button:hover {
+    text-decoration: none;
+    color: #fff;
 }

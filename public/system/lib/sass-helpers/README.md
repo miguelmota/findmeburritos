@@ -16,7 +16,7 @@ bower install sass-helpers
 
 ```css
 @include repond-to(mobile) {
-    color: black;
+    color: #000;
 }
 ```
 
@@ -30,7 +30,7 @@ bower install sass-helpers
 
 ```css
 @include placeholder {
-    color: black;
+    color: #000;
 }
 ```
 
@@ -43,7 +43,20 @@ bower install sass-helpers
 ### triangle(size, color, direction, trim, transparent)
 
 ```css
-@include triangle(24px, black, up, false, false);
+@include triangle(24px, #000, up, false, false);
+```
+
+### keyframes name { @content }
+
+```css
+@include keyframes(color) {
+    0% {
+        color: #fff;
+    }
+    100% {
+        color: #000;
+    }
+}
 ```
 
 ## License

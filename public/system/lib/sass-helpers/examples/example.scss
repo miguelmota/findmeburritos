@@ -30,3 +30,12 @@ code {
 .ellipsis {
     @include ellipsis(18px, 1.2, 3);
 }
+
+@include keyframes(color) {
+    0% {
+        color: #fff;
+    }
+    100% {
+        color: #000;
+    }
+}

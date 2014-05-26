@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean.system').controller('PlacesController', ['$log', '$scope', '$rootScope', '$http', '$routeParams', '$location', 'Global', 'Menus', 'Places',
-    function($log, $scope, $rootScope, $http, $routeParams, $location, Global, Menus, Places) {
+angular.module('mean.system').controller('PlacesController', ['$log', '$scope', '$rootScope', '$http', '$routeParams', '$location', 'Global', 'Menus', 'Places', 'geolocation',
+    function($log, $scope, $rootScope, $http, $routeParams, $location, Global, Menus, Places, geolocation) {
         $scope.global = Global;
 
         $scope.init = function() {
