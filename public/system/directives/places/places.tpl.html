@@ -38,10 +38,11 @@
     </div>
 </section>
 <section class="pagination-region" ng-show="hasPagination">
-    <div class="pagination pagination-previous">
+    <div class="pagination pagination-previous" ng-show="hasPrev">
         <a  class="btn btn-primary" href ng-click="prev()" ng-show="hasPrev">Prev</a>
     </div>
-    <div class="pagination pagination-next">
+    <div class="pagination pagination-next" ng-class="{'pagination-expanded':
+     !hasPrev}" ng-show="hasNext">
         <a class="btn btn-primary" href ng-click="next()" ng-show="hasNext">More</a>
     </div>
 </section>

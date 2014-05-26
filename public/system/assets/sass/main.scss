@@ -359,6 +359,11 @@ $list-group-item-name-color: #587183;
     border: none;
 }
 
+.pagination-expanded {
+    display: block;
+    width: 100%;
+}
+
 .pagination-previous {
     float: left;
     padding: 0 10px 0 0;
