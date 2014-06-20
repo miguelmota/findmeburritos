@@ -4,7 +4,7 @@
 
 Burrito finder created with the [MEAN](http://mean.io/) stack and [Yelp](yelp.com) API.
 
-Gotta warn ya, code ain't the prettiest since I rushed through this.
+Gotta warn ya, code ain't the prettiest since I did this overnight for fun.
 
 # License
 
