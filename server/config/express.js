@@ -27,7 +27,7 @@ var express = require('express'),
 
 module.exports = function(app, passport, db) {
 
-    var gfs = new Grid(db.connections[0].db, db.mongo);
+    //var gfs = new Grid(db.connections[0].db, db.mongo);
 
     app.set('showStackError', true);
 
@@ -86,6 +86,7 @@ module.exports = function(app, passport, db) {
     });
 
     // Express/Mongo session storage
+    /*
     app.use(session({
         secret: config.sessionSecret,
         store: new mongoStore({
@@ -93,6 +94,7 @@ module.exports = function(app, passport, db) {
             collection: config.sessionCollection
         })
     }));
+    */
 
     // Dynamic helpers
     app.use(helpers(config.app.name));
@@ -118,7 +120,7 @@ module.exports = function(app, passport, db) {
     function themeHandler(req, res) {
 
         res.setHeader('content-type', 'text/css');
-
+/*
         gfs.files.findOne({
             filename: 'theme.css'
         }, function(err, file) {
@@ -140,11 +142,12 @@ module.exports = function(app, passport, db) {
                 readstream.pipe(res);
             }
         });
+      */
     }
 
     // We override this file to allow us to swap themes
     // We keep the same public path so we can make use of the bootstrap assets
-    app.get('/public/system/lib/bootstrap/dist/css/bootstrap.css', themeHandler);
+    app.get('/public/system/lib/bootstrap/dist/css/bootstrap.css'/*, themeHandler*/);
 
     app.get('/modules/aggregated.css', function(req, res) {
         res.setHeader('content-type', 'text/css');
