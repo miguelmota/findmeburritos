@@ -4,7 +4,7 @@
 
 ## Demo
 
-[http://www.findmeburritos.com](http://www.findmeburritos.com)
+[https://findmeburritos.com](https://findmeburritos.com)
 
 ### Screenshots
 
