@@ -1,0 +1,20 @@
+{
+  "name": "angular-clearable",
+  "version": "0.1.2",
+  "main": "js/angular-clearable.js",
+  "ignore": [
+    ".gitignore"
+  ],
+  "dependencies": {
+    "angular": ">=1.0.3"
+  },
+  "homepage": "https://github.com/miguelmota/angular-clearable",
+  "_release": "0.1.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.2",
+    "commit": "81a8f3be9f4be1046d4f2f02b2725cdcb4b99941"
+  },
+  "_source": "https://github.com/miguelmota/angular-clearable.git",
+  "_target": "*"
+}

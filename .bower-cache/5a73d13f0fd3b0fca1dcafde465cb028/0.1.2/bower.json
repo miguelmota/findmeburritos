@@ -1,0 +1,11 @@
+{
+  "name": "angular-clearable",
+  "version": "0.1.2",
+  "main": "js/angular-clearable.js",
+  "ignore": [
+    ".gitignore"
+  ],
+  "dependencies": {
+    "angular": ">=1.0.3"
+  }
+}
