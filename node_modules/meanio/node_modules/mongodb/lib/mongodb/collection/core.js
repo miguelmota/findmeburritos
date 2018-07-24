@@ -22,6 +22,7 @@ var insert = function insert (docs, options, callback) {
 
   // Get a connection
   var connection = this.db.serverConfig.checkoutWriter();
+  if(connection instanceof Error && connection.code == -5000) return callback(connection);
   var useLegacyOps = options.useLegacyOps == null || options.useLegacyOps == false ? false : true;
   // If we support write commands let's perform the insert using it  
   if(!useLegacyOps && hasWriteCommands(connection) 
@@ -60,6 +61,10 @@ var insertWithWriteCommands = function(self, docs, options, callback) {
 
   // Checkout a write connection
   var connection = self.db.serverConfig.checkoutWriter();  
+  if(connection instanceof Error && connection.code == -5000) return callback(connection);
+
+  // Do we return the actual result document
+  var fullResult = typeof options.fullResult == 'boolean' ? options.fullResult : false;
 
   // Collect errorOptions
   var errorOptions = shared._getWriteConcern(self, options);
@@ -111,10 +116,14 @@ var insertWithWriteCommands = function(self, docs, options, callback) {
           var error = utils.toError(result.writeErrors[0].errmsg);
           error.code = result.writeErrors[0].code;
           error.err = result.writeErrors[0].errmsg;
+          error.message = result.writeErrors[0].errmsg;
+
+          if (fullResult) return callback(error, result != null ? result : null);
           // Return the error
           return callback(error, null);
         }
 
+        if(fullResult) return callback(null, result);
         // Return the results for a whole batch
         callback(null, docs)
     });    
@@ -136,11 +145,15 @@ var insertWithWriteCommands = function(self, docs, options, callback) {
         if(result.hasWriteErrors()) {
           var error = result.getWriteErrors()[0];
           error.code = result.getWriteErrors()[0].code;
-          error.err = result.getWriteErrors()[0].errmsg;        
+          error.err = result.getWriteErrors()[0].errmsg;
+          error.message = result.getWriteErrors()[0].errmsg;
+          
+          if (fullResult) return callback(error, result != null ? result : null);
           // Return the error
           return callback(error, null);
         }
 
+        if(fullResult) return callback(null, result != null ? result : null);
         // Return the results for a whole batch
         callback(null, docs)
       });
@@ -188,6 +201,9 @@ var insertAll = function insertAll (self, docs, options, callback) {
   // Get checkKeys value
   var checkKeys = typeof options.checkKeys != 'boolean' ? true : options.checkKeys;
 
+  // Do we return the actual result document
+  var fullResult = typeof options.fullResult == 'boolean' ? options.fullResult : false;
+
   // Pass in options
   var insertCommand = new InsertCommand(
       self.db
@@ -230,8 +246,10 @@ var insertAll = function insertAll (self, docs, options, callback) {
     }
 
     // Execute command with safe options (rolls up both command and safe command into one and executes them on the same connection)
-    self.db._executeInsertCommand(insertCommand, commandOptions, handleWriteResults(function (err, error) {
+    self.db._executeInsertCommand(insertCommand, commandOptions, handleWriteResults(function (err, results) {
       if(err) return callback(err, null);
+      if(results == null) return callback(new Error("command failed to return result"));
+      if(fullResult) return callback(null, results);
       callback(null, docs);
     }));
   } else if(shared._hasWriteConcern(errorOptions) && callback == null) {
@@ -286,10 +304,14 @@ var removeWithWriteCommands = function(self, selector, options, callback) {
 
   // Checkout a write connection
   var connection = self.db.serverConfig.checkoutWriter();  
+  if(connection instanceof Error && connection.code == -5000) return callback(connection);
 
   // Figure out the value of top
   var limit = options.single == true ? 1 : 0;
   var upsert = typeof options.upsert == 'boolean' ? options.upsert : false;
+
+  // Do we return the actual result document
+  var fullResult = typeof options.fullResult == 'boolean' ? options.fullResult : false;
 
   // Collect errorOptions
   var errorOptions = shared._getWriteConcern(self, options);
@@ -329,10 +351,12 @@ var removeWithWriteCommands = function(self, selector, options, callback) {
         var error = utils.toError(result.writeErrors[0].errmsg);
         error.code = result.writeErrors[0].code;
         error.err = result.writeErrors[0].errmsg;
+        error.message = result.writeErrors[0].errmsg;
         // Return the error
         return callback(error, null);
       }
       
+      if(fullResult) return callback(null, result);
       // Backward compatibility format
       var r = backWardsCompatibiltyResults(result, 'remove');      
       // Return the results for a whole batch
@@ -347,6 +371,7 @@ var remove = function remove(selector, options, callback) {
 
   // Get a connection
   var connection = this.db.serverConfig.checkoutWriter();
+  if(connection instanceof Error && connection.code == -5000) return callback(connection);
   var useLegacyOps = options.useLegacyOps == null || options.useLegacyOps == false ? false : true;
 
   // If we support write commands let's perform the insert using it  
@@ -369,6 +394,9 @@ var remove = function remove(selector, options, callback) {
   selector = selector == null ? {} : selector;
   // Set up flags for the command, if we have a single document remove
   var flags = 0 | (options.single ? 1 : 0);
+
+  // Do we return the actual result document
+  var fullResult = typeof options.fullResult == 'boolean' ? options.fullResult : false;
 
   // DbName
   var dbName = options['dbName'];
@@ -407,9 +435,11 @@ var remove = function remove(selector, options, callback) {
     }
 
     // Execute command with safe options (rolls up both command and safe command into one and executes them on the same connection)
-    this.db._executeRemoveCommand(deleteCommand, commandOptions, handleWriteResults(function (err, error) {
+    this.db._executeRemoveCommand(deleteCommand, commandOptions, handleWriteResults(function (err, results) {
       if(err) return callback(err, null);
-      callback(null, error[0].n);
+      if(results == null) return callback(new Error("command failed to return result"));
+      if(fullResult) return callback(null, results);
+      callback(null, results[0].n);
     }));
   } else if(shared._hasWriteConcern(errorOptions) && callback == null) {
     throw new Error("Cannot use a writeConcern without a provided callback");
@@ -439,6 +469,7 @@ var save = function save(doc, options, callback) {
   var id = doc['_id'];
   var commandOptions = shared._getWriteConcern(this, options);
   if(options.connection) commandOptions.connection = options.connection;
+  if(typeof options.fullResult == 'boolean') commandOptions.fullResult = options.fullResult;
 
   if(id != null) {
     commandOptions.upsert = true;
@@ -490,10 +521,14 @@ var updateWithWriteCommands = function(self, selector, document, options, callba
 
   // Checkout a write connection
   var connection = self.db.serverConfig.checkoutWriter();  
+  if(connection instanceof Error && connection.code == -5000) return callback(connection);
 
   // Figure out the value of top
   var multi = typeof options.multi == 'boolean' ? options.multi : false;
   var upsert = typeof options.upsert == 'boolean' ? options.upsert : false;
+
+  // Do we return the actual result document
+  var fullResult = typeof options.fullResult == 'boolean' ? options.fullResult : false;
 
   // Collect errorOptions
   var errorOptions = shared._getWriteConcern(self, options);
@@ -541,10 +576,12 @@ var updateWithWriteCommands = function(self, selector, document, options, callba
       if(!result.ok || Array.isArray(result.writeErrors) && result.writeErrors.length > 0) {
         var error = utils.toError(result.writeErrors[0].errmsg);
         error.code = result.writeErrors[0].code;
-        error.err = result.writeErrors[0].errmsg;        
+        error.err = result.writeErrors[0].errmsg;
+        error.message = result.writeErrors[0].errmsg;
         return callback(error, null);
       }
       
+      if(fullResult) return callback(null, result);
       // Backward compatibility format
       var r = backWardsCompatibiltyResults(result, 'update');
       // Return the results for a whole batch
@@ -612,6 +649,7 @@ var update = function update(selector, document, options, callback) {
 
   // Get a connection
   var connection = options.connection || this.db.serverConfig.checkoutWriter();
+  if(connection instanceof Error && connection.code == -5000) return callback(connection);
   var useLegacyOps = options.useLegacyOps == null || options.useLegacyOps == false ? false : true;
   // If we support write commands let's perform the insert using it  
   if(!useLegacyOps && hasWriteCommands(connection) && !Buffer.isBuffer(selector) && !Buffer.isBuffer(document)) {
@@ -628,6 +666,9 @@ var update = function update(selector, document, options, callback) {
   // If we are not providing a selector or document throw
   if(selector == null || typeof selector != 'object') return callback(new Error("selector must be a valid JavaScript object"));
   if(document == null || typeof document != 'object') return callback(new Error("document must be a valid JavaScript object"));
+
+  // Do we return the actual result document
+  var fullResult = typeof options.fullResult == 'boolean' ? options.fullResult : false;
 
   // Either use override on the function, or go back to default on either the collection
   // level or db
@@ -668,9 +709,11 @@ var update = function update(selector, document, options, callback) {
     }
 
     // Execute command with safe options (rolls up both command and safe command into one and executes them on the same connection)
-    this.db._executeUpdateCommand(updateCommand, commandOptions, handleWriteResults(function(err, error) {
+    this.db._executeUpdateCommand(updateCommand, commandOptions, handleWriteResults(function(err, results) {
       if(err) return callback(err, null);
-      callback(null, error[0].n, error[0]);
+      if(results == null) return callback(new Error("command failed to return result"));
+      if(fullResult) return callback(null, results);
+      callback(null, results[0].n, results[0]);
     }));
   } else if(shared._hasWriteConcern(errorOptions) && callback == null) {
     throw new Error("Cannot use a writeConcern without a provided callback");
@@ -724,6 +767,7 @@ var findAndModify = function findAndModify (query, sort, doc, options, callback)
 
   // Checkout a write connection
   options.connection = self.db.serverConfig.checkoutWriter();  
+  if(options.connection instanceof Error && options.connection.code == -5000) return callback(options.connection);
 
   // Either use override on the function, or go back to default on either the collection
   // level or db

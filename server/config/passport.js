@@ -1,5 +1,6 @@
 'use strict';
 
+/*
 var mongoose = require('mongoose'),
     LocalStrategy = require('passport-local').Strategy,
     TwitterStrategy = require('passport-twitter').Strategy,
@@ -9,9 +10,10 @@ var mongoose = require('mongoose'),
     LinkedinStrategy = require('passport-linkedin').Strategy,
     User = mongoose.model('User'),
     config = require('./config');
+*/
 
 module.exports = function(passport) {
-
+  /*
     // Serialize the user id to push into the session
     passport.serializeUser(function(user, done) {
         done(null, user.id);
@@ -203,4 +205,5 @@ module.exports = function(passport) {
             });
         }
     ));
+  */
 };

@@ -34,6 +34,7 @@ var Batch = function(batchType, originalZeroIndex) {
   this.batchType = batchType;
   this.operations = [];
   this.size = 0;
+  this.sizeBytes = 0;
 }
 
 /**
@@ -141,6 +142,16 @@ var BatchWriteResult = function(bulkResult) {
   }
 
   /**
+   * Retrieve lastOp if available
+   *
+   * @return {Array}
+   * @api public
+   */
+  this.getLastOp = function() {
+    return bulkResult.lastOp;
+  }
+
+  /**
    * Retrieve the write concern error if any
    *
    * @return {WriteConcernError}
@@ -242,6 +253,11 @@ var mergeBatchResults = function(ordered, batch, bulkResult, err, result) {
     return;
   } else if(result.ok == 0 && bulkResult.ok == 0) {
     return;
+  }
+
+  // Add lastop if available
+  if(result.lastOp) {
+    bulkResult.lastOp = result.lastOp;
   }
 
   // If we have an insert Batch type

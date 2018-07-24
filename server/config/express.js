@@ -14,7 +14,7 @@ var express = require('express'),
     errorHandler = require('errorhandler'),
     mean = require('meanio'),
     consolidate = require('consolidate'),
-    mongoStore = require('mean-connect-mongo')(session),
+    //mongoStore = require('mean-connect-mongo')(session),
     flash = require('connect-flash'),
     helpers = require('view-helpers'),
     config = require('./config'),
@@ -25,7 +25,7 @@ var express = require('express'),
     fs = require('fs'),
     Grid = require('gridfs-stream');
 
-module.exports = function(app, passport, db) {
+module.exports = function(app) {
 
     //var gfs = new Grid(db.connections[0].db, db.mongo);
 
@@ -100,8 +100,8 @@ module.exports = function(app, passport, db) {
     app.use(helpers(config.app.name));
 
     // Use passport session
-    app.use(passport.initialize());
-    app.use(passport.session());
+    //app.use(passport.initialize());
+    //app.use(passport.session());
 
     //mean middleware from modules before routes
     app.use(mean.chainware.before);
@@ -167,7 +167,7 @@ module.exports = function(app, passport, db) {
             // used and shared by routes as further middlewares and is not a
             // route by itself
             util.walk(appPath + '/server/routes', 'middlewares', function(path) {
-                require(path)(app, passport);
+                require(path)(app);
             });
         }
 

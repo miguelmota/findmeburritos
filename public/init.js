@@ -17,7 +17,8 @@ for (var index in window.modules) {
 }
 
 // Default modules
-var modules = ['ngCookies', 'ngResource', 'ngRoute', 'ngAnimate', 'ngAutocomplete', 'xngClearable', 'geolocation', 'ui.bootstrap', 'ui.router', 'mean.system', 'mean.auth'];
+var modules = ['ngCookies', 'ngResource', 'ngRoute', 'ngAnimate', 'ngAutocomplete', 'geolocation', 'ui.bootstrap', 'ui.router', 'mean.system', 'mean.auth'];
+// 'xngClearable'
 modules = modules.concat(packageModules);
 
 // Combined modules

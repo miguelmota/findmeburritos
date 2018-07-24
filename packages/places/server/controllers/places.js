@@ -12,15 +12,22 @@ function compactObject(obj) {
     return obj;
 }
 
-var yelp = require('yelp').createClient({
+var Yelp = require('yelp-fusion')
+var clientID = 'dGr2bTqxMlKyQTV7RhqgHg'
+var apiKey = 'vfwiyJmO5vevL2DU-oKDCQSCxeIofBrD-u2FE4eXLMoy2DP_q8PDQ5-QQzKBVWnhVgInzlOkbnXk3Mb8kYd7bx2aDSjYOvl42yG9r0CxtIDKoqCyc3rVj2v8agdXW3Yx'
+
+const yelp = Yelp.client(apiKey);
+/*
+var yelp = new Yelp({
     consumer_key: config.yelp.consumerKey,
     consumer_secret: config.yelp.consumerSecret,
     token: config.yelp.token,
     token_secret: config.yelp.tokenSecret
 });
+*/
 
 function format(data) {
-    return _.map(data.businesses, function(p, i) {
+    return _.map(data.jsonBody.businesses, function(p, i) {
         return {
             name: p.name,
             phone: p.phone,
@@ -57,11 +64,15 @@ module.exports.search = function(opts) {
         ll: null, // lat,lng
     }), ['page', 'latlng']));
 
-    yelp.search(opts, function(error, data) {
-        if (error) return deferred.reject(error);
+    yelp.search(opts)
+    .then(data => {
+      //console.log(data)
         //log.info(data);
         return deferred.resolve(format(data));
-    });
+    })
+    .catch(err => {
+      deferred.reject(error);
+    })
 
     return deferred.promise;
 };

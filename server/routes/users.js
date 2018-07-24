@@ -4,6 +4,7 @@
 var users = require('../controllers/users');
 
 module.exports = function(app, passport) {
+  /*
 
     app.route('/logout')
         .get(users.signout);
@@ -94,5 +95,6 @@ module.exports = function(app, passport) {
         .get(passport.authenticate('linkedin', {
             failureRedirect: '#!/login'
         }), users.authCallback);
+        */
 
 };

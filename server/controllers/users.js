@@ -3,8 +3,8 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-    User = mongoose.model('User');
+//var mongoose = require('mongoose'),
+//User = mongoose.model('User');
 
 /**
  * Auth callback
@@ -42,6 +42,7 @@ exports.session = function(req, res) {
  * Create user
  */
 exports.create = function(req, res, next) {
+  /*
     var user = new User(req.body);
 
     user.provider = 'local';
@@ -78,6 +79,7 @@ exports.create = function(req, res, next) {
         });
         res.status(200);
     });
+  */
 };
 /**
  * Send User
@@ -90,6 +92,7 @@ exports.me = function(req, res) {
  * Find user by id
  */
 exports.user = function(req, res, next, id) {
+  /*
     User
         .findOne({
             _id: id
@@ -100,4 +103,5 @@ exports.user = function(req, res, next, id) {
             req.profile = user;
             next();
         });
+        */
 };
